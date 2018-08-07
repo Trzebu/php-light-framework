@@ -11,7 +11,7 @@ class ProfileController extends Controller {
 
         $user = new User();
 
-        $this->view->data = $user->data($userId) !== null ? $user->data($userId) : null;
+        $this->view->data = $user->data($userId);
 
         $this->view->render("user.profile");
     }
