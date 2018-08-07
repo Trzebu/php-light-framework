@@ -28,6 +28,13 @@ class Validation {
                 $value = isset($key[1]) ? $key[1] : null;
 
                 switch ($key[0]) {
+                    case "accepted":
+                        if (!isset($post[$input])) {
+                            $this->addError($input, Str::replace(Translate::get("validation.accepted"), [
+                                ":attribute" => $attribute
+                            ]));
+                        }
+                    break;
                     case "token":
                         if (isset($post[$input])) {
                             $token_check = true;
