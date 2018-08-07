@@ -6,6 +6,7 @@ use Libs\Token;
 use Libs\Validation\Validation;
 use Libs\Validation\ValidationErrors;
 use Libs\Session;
+use Libs\Http\Redirect;
 
 class Controller {
 
@@ -26,7 +27,7 @@ class Controller {
     }
 
     protected function redirect ($path) {
-        return header("Location: " . route($path));
+        return Redirect::to($path);
     }
 
 }

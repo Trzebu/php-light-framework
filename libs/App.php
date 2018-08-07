@@ -2,6 +2,7 @@
 namespace Libs;
 use Libs\Route;
 use Libs\Http\Request;
+use Libs\Middleware;
 
 class App {
 
@@ -11,6 +12,12 @@ class App {
 
         if (!$route) {
             die("404 Error");
+        }
+
+        if (isset($route["route"][1]["middleware"])) {
+            foreach ($route["route"][1]["middleware"] as $midd) {
+                Middleware::check($midd);
+            }
         }
 
         $explodeToControllerName = explode("@", $route["route"][1]["uses"]);

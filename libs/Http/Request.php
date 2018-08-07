@@ -6,7 +6,7 @@ class Request {
 
     public function input ($name = null) {
         if ($name !== null) {
-            return $_POST[$name];
+            return isset($_POST[$name]) ? $_POST[$name] : null;
         }
         return $_POST;
     }

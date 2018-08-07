@@ -1,13 +1,28 @@
 <?php
 namespace App\Models;
 use Libs\Model;
+use Libs\Session;
+use Libs\User as Auth;
 
 class User extends Model {
     
     protected $_table = "users";
 
-    public function id () {
-        return $this->where("id", "=", 6)->get(["name"])->first()->name;
+    public function usersList () {
+        return $this->get(["id", "login"])->count() > 0 ? $this->results() : null;
+    }
+
+    public function data ($id = null) {
+
+        if ($id === null) {
+            return Auth::data();
+        }
+
+        return $this->where("id", "=", intval($id))->get()->count() > 0 ? $this->first() : null;
+    }
+
+    public function create ($fields) {
+        $this->insert($fields);
     }
 
 }

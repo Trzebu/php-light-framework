@@ -29,6 +29,7 @@ class DataBase implements Countable {
                                   Config::get("DataBase/password"));
             $this->_pdo->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
             $this->_pdo->query("SET CHARSET utf8");
+            $this->reset();
         } catch (PDOException $error) {
             die($error->getMessage());
         }
@@ -75,6 +76,9 @@ class DataBase implements Countable {
     public function where ($argument, $operator, $value) {
         $operators = ["=", "!=", "<", ">", "<=", ">="];
         try {
+            if ($this->_table === null) {
+                die("First you must set table!");
+            }
             if ($argument && $operator && $value !== false) {
                 if (in_array($operator, $operators)) {
                     $this->_where .= $this->operatorGrammar($argument, $operator);
@@ -154,11 +158,13 @@ class DataBase implements Countable {
     }
 
     public function results () {
+        $this->reset();
         return $this->_results;
     }
 
     public function first () {
         if ($this->_count > 0) {
+            $this->reset();
             return $this->_results[0];
         }
         return false;
@@ -193,6 +199,12 @@ class DataBase implements Countable {
         } else {
             return $argument . $operator . "?";
         }
+    }
+
+    private function reset () {
+        $this->_where = "";
+        $this->_values = [];
+        $this->_getValues = [];
     }
 
     public function count () {

@@ -6,6 +6,14 @@ use Libs\Validation\ValidationErrors;
 
 class View {
 
+    public function flash ($name, $string = null) {
+        return Session::flash($name, $string);
+    }
+
+    public function exists ($name) {
+        return Session::exists($name);
+    }
+
     public function render ($path) {
         $path = str_replace(".", "/", $path);
         $path = __ROOT__ . "/resources/view/" . $path . ".php";
@@ -17,7 +25,7 @@ class View {
             die($e->getMessage());
         }
 
-        include $path;
+        require_once $path;
     }
 
 }

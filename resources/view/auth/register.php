@@ -13,11 +13,18 @@
 
 <?php } ?>
 
+<?php 
+    if ($this->exists("register_success")) {
+        echo $this->flash("register_success");
+    }
+?>
+
 <form method="post" action="">
 
     Login:<br><input type="text" name="login"><br>
     Password:<br><input type="password" name="password"><br>
     Password again:<br><input type="password" name="password_again"><br>
+    Accept rule: <input type="checkbox" name="rule"><br>
     <input type="hidden" name="_token" value="<?= $this->token->generate("_token") ?>">
     <input type="submit" value="Register">
 </form>
