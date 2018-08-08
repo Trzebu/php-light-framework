@@ -2,7 +2,6 @@
 namespace Libs;
 use Libs\Route;
 use Libs\Http\Request;
-use Libs\Middleware;
 
 class App {
 
@@ -15,8 +14,9 @@ class App {
         }
 
         if (isset($route["route"][1]["middleware"])) {
+            $middleware = require_once(__ROOT__ . "/config/middleware.php");
             foreach ($route["route"][1]["middleware"] as $midd) {
-                Middleware::check($midd);
+                new $middleware[$midd];
             }
         }
 
