@@ -9,6 +9,17 @@ class User {
 
     private static $_data = null;
 
+    public function __construct () {
+        if (!Session::exists("u_id")) {
+            if (Cookie::exists("remember_token")) {
+                $token = DataBase::instance()->table("users")->where("remember_me", "=", Cookie::get("remember_token"))->get(["id"]);
+                if ($token->count() > 0) {
+                    Session::set("u_id", $token->first()->id);
+                }
+            }
+        }
+    }
+
     public function logout () {
         Session::unset("u_id");
         Cookie::delete("remember_token");
