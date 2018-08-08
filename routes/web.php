@@ -60,3 +60,11 @@ Route::get("/profile", [
     "as" => "user.profiles",
     "middleware" => ["auth"]
 ]);
+
+//Admin
+
+Route::get("/admin", [
+    "uses" => "App\Http\Controllers\AdminController@index",
+    "as" => "admin.index",
+    "middleware" => ["auth", "permissions"]
+]);
