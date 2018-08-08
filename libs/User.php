@@ -74,7 +74,7 @@ class User {
         if ($remember !== null) {
             $token = md5(uniqid());
 
-            DataBase::instance()->where("id", "=", $db->id)->update([
+            DataBase::instance()->table("users")->where("id", "=", $db->id)->update([
                 "remember_me" => $token
             ]);
 
