@@ -13,7 +13,9 @@
 <?php
     
     if (Auth()->check()) {
-        echo "Welcome " . Auth()->data()->login . "!<br>You are logged in.";
+        echo "Welcome " . Auth()->data()->login . "!<br>You are logged in.<br>";
+        echo "You are " . Auth()->permissions();
+        var_dump(Auth()->permissions("admin"));
     }
 
 ?>
