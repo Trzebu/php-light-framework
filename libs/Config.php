@@ -3,7 +3,7 @@
 namespace Libs;
 
 class Config {
-    public static function get($path = NULL) {
+    public static function get($path = NULL, $as_arr = false) {
         if ($path) {
             $path = explode('/', $path);
             $config = $GLOBALS['constants'];
@@ -14,7 +14,7 @@ class Config {
                 }
             }
 
-            if (is_array($config)) {
+            if (is_array($config) && !$as_arr) {
                 return "Unknown config path. " . implode("/", $path);
             }
 
