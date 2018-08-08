@@ -17,6 +17,11 @@ Route::get("/", [
     "as" => "home.index"
 ]);
 
+Route::post("/language", [
+    "uses" => "App\Http\Controllers\Home@language",
+    "as" => "home.language"
+]);
+
 Route::get("/login", [
     "uses" => "App\Http\Controllers\AuthController@loginIndex",
     "as" => "auth.login",
