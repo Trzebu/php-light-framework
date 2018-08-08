@@ -36,11 +36,11 @@ class DataBase implements Countable {
     }
 
     public static function instance () {
-        if (!isset(self::$_instance)) {
-            self::$_instance = new DataBase();
-        }
+        // if (!isset(self::$_instance)) {
+        //     self::$_instance = new DataBase();
+        // }
 
-        return self::$_instance;
+        return new DataBase();
     }
 
     public function query ($sql, $bindBefore = []) {
