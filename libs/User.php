@@ -20,6 +20,26 @@ class User {
         }
     }
 
+    public function permissions ($key = null) {
+        $groups = DataBase::instance()->table("permissions")->where("id", "=", self::data()->permissions)->get()->first();
+
+        if ($key !== null) {
+            $groups = json_decode($groups->permissions, true);
+            
+            foreach ($groups as $group => $value) {
+                if ($group == $key) {
+                    if ($value) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        return $groups->name;
+    }
+
     public function logout () {
         Session::unset("u_id");
         Cookie::delete("remember_token");
