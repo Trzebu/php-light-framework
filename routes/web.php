@@ -73,3 +73,15 @@ Route::get("/admin", [
     "as" => "admin.index",
     "middleware" => ["auth", "permissions"]
 ]);
+
+Route::get("/admin/user_delete", [
+    "uses" => "App\Http\Controllers\AdminController@getUserDelete",
+    "as" => "admin.user_delete",
+    "middleware" => ["auth", "permissions"]
+]);
+
+Route::get("/admin/user_delete/{token}/{userId}", [
+    "uses" => "App\Http\Controllers\AdminController@userDelete",
+    "as" => "admin.user_delete.execute",
+    "middleware" => ["auth", "permissions"]
+]);
