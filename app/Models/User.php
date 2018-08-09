@@ -25,4 +25,9 @@ class User extends Model {
         $this->insert($fields);
     }
 
+    public function deleteUser ($id = null) {
+        $id = $id === null ? Auth::data()->id : $id;
+        $this->where("id", "=", $id)->delete();
+    }
+
 }
