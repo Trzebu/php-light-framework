@@ -8,7 +8,7 @@ use Libs\Http\Request;
 use Libs\Translate;
 use Libs\Session;
 
-class AuthController extends Controller {
+final class AuthController extends Controller {
 
     public function loginIndex () {
         $this->view->render("auth.login");

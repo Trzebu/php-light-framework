@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Libs\Session;
 
-class ProfileController extends Controller {
+final class ProfileController extends Controller {
 
     public function getProfile ($userId) {
 

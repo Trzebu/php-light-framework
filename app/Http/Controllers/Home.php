@@ -6,7 +6,7 @@ use Libs\Http\Request;
 use Libs\Translate;
 use Libs\Config;
 
-class Home extends Controller {
+final class Home extends Controller {
 
     public function index () {
         $this->view->lang_list = Config::get("langs", true);
