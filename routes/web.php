@@ -85,3 +85,10 @@ Route::get("/admin/user_delete/{token}/{userId}", [
     "as" => "admin.user_delete.execute",
     "middleware" => ["auth", "permissions"]
 ]);
+
+//-------------------------------TEST----------------
+
+Route::get("/test", [
+    "uses" => "App\Http\Controllers\Test@index",
+    "as" => "test.index"
+]);
