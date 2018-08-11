@@ -21,6 +21,5 @@ require_once(__ROOT__ . '/libs/functions/route.php');
 require_once(__ROOT__ . '/libs/functions/dd.php');
 require_once(__ROOT__ . '/libs/functions/auth.php');
 
-//Starting app
 $app = new Libs\App;
 
