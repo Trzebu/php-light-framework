@@ -12,6 +12,7 @@ $GLOBALS = [
         "dirs" => [
             "resources" => "/resources",
             "view" => "/resources/view",
+            "compiled_templates" => "/storage/views",
         ],
         "DataBase" => [
             "driver" => "mysql",
