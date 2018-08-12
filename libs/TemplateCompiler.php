@@ -28,9 +28,12 @@ class TemplateCompiler {
                 $params = explode(" ", $command);
                 $command = $params[0];
                 array_shift($params);
+                $line = $i;
 
                 switch ($command) {
-                    
+                    case "include":
+                        $this->includes($line, $params);
+                    break;
                 }
 
             }
@@ -63,6 +66,14 @@ class TemplateCompiler {
         return $str;
     }
 
-    
+    private function includes ($line, $params) {
+        if (count($params) > 1) {
+            die("Error in compilation. Wrong parametr for include.");
+        }
+
+        $params = Str::replace($params[0], ["/" => "."]);
+        $this->_code[$line] = "<?php require_once({$params} . \".ctemp.php\"); ?>";
+        array_push($this->_includes, $params);
+    }
 
 }
