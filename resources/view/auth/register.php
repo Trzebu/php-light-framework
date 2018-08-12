@@ -1,23 +1,16 @@
 <h1>Register</h1>
 
-<?php if ($this->errors->hasError()) { ?>
+@if $this->errors->hasError()
+    
+    @foreach $this->errors->allErrors() as $error
+        {{ $error }}<br>
+    @endforeach
 
-    <?php
+@endif
 
-        if ($this->errors->hasError()) {
-            foreach ($this->errors->allErrors() as $error) {
-                echo $error, "<br>";
-            }
-        }
-    ?>
-
-<?php } ?>
-
-<?php 
-    if ($this->exists("register_success")) {
-        echo $this->flash("register_success");
-    }
-?>
+@if $this->exists("info")
+    {{ $this->flash("register_success") }}
+@endif
 
 <form method="post" action="">
 
