@@ -29,7 +29,7 @@ class TemplateCompiler {
                 $command = trim($params[0]);
                 array_shift($params);
                 $line = $i;
-                echo $command, $line, "\n";
+
                 switch ($command) {
                     case "include":
                         $this->includes($line, $params);
@@ -50,10 +50,12 @@ class TemplateCompiler {
                         $this->foreach($line, $params);
                     break;
                     case "endforeach":
-                        $this->endforeach($line, $params);
+                        $this->endforeach($line);
                     break;
                 }
 
+            } else if ((strpos($this->_code[$i], "{{") !== false) && (strpos($this->_code[$i], "}}") !== false)) {
+                $this->variable($i);
             }
 
         }
@@ -82,7 +84,42 @@ class TemplateCompiler {
         return $str;
     }
 
-    //*******All statment*************
+    //*********Vars*****************
+
+    private function variable ($line) {
+        $bracket = 0;
+        $row = $this->_code[$line];
+        $currentVarName = [];
+        $vars = [];
+
+        for ($i = 0; $i < strlen($row); $i++) {
+            if ($row[$i] == "{") {
+                $bracket++;
+            } else if (($row[$i] == "}") && ($row[$i + 1] == "}")) {
+                $bracket = -1;
+            }
+
+            if ($bracket == -1) {
+                array_push($vars, implode("", $currentVarName));
+                $currentVarName = [];
+                $bracket = 0;
+            }
+
+            if ($bracket == 2) {
+                if ($row[$i] != "{") {
+                    array_push($currentVarName, $row[$i]);
+                }
+            }
+
+        }
+
+        foreach ($vars as $var) {
+            $this->_code[$line] = Str::replace($this->_code[$line], ["{{" .$var . "}}" => "<?php echo " . trim($var) . " ?>"]);
+        }
+
+    }
+
+    //*******All synatx*************
 
     private function endforeach ($line) {
         $this->_code[$line] = "<?php endforeach; ?>";
