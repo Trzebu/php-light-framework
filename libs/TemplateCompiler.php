@@ -26,13 +26,31 @@ class TemplateCompiler {
             if (strpos($this->_code[$i], "@") !== false) {
                 $command = ltrim($this->_code[$i], "@");
                 $params = explode(" ", $command);
-                $command = $params[0];
+                $command = trim($params[0]);
                 array_shift($params);
                 $line = $i;
-
+                echo $command, $line, "\n";
                 switch ($command) {
                     case "include":
                         $this->includes($line, $params);
+                    break;
+                    case "if":
+                        $this->if($line, $params);
+                    break;
+                    case "elseif":
+                        $this->elseif($line, $params);
+                    break;
+                    case "else":
+                        $this->else($line);
+                    break;
+                    case "endif":
+                        $this->endif($line);
+                    break;
+                    case "foreach":
+                        $this->foreach($line, $params);
+                    break;
+                    case "endforeach":
+                        $this->endforeach($line, $params);
                     break;
                 }
 
@@ -58,12 +76,36 @@ class TemplateCompiler {
 
     private function removeSpace ($str) {
         for ($i = 0; $i < strlen($str); $i++) {
-            if ($str[$i] != " ") {
-                break;
-            }
+            $str = rtrim($str, " ");
             $str = ltrim($str, " ");
         }
         return $str;
+    }
+
+    //*******All statment*************
+
+    private function endforeach ($line) {
+        $this->_code[$line] = "<?php endforeach; ?>";
+    }
+
+    private function foreach ($line, $params) {
+        $this->_code[$line] = "<?php foreach(" . implode(" ", $params) . "): ?>";
+    }
+
+    private function endif ($line) {
+        $this->_code[$line] = "<?php endif; ?>";
+    }
+
+    private function else ($line) {
+        $this->_code[$line] = "<?php else: ?>";
+    }
+
+    private function elseif ($line, $params) {
+        $this->_code[$line] = "<?php elseif(" . implode(" ", $params) . "): ?>";
+    }
+
+    private function if ($line, $params) {
+        $this->_code[$line] = "<?php if(" . implode(" ", $params) . "): ?>";
     }
 
     private function includes ($line, $params) {
