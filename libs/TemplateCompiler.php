@@ -3,6 +3,7 @@
 namespace Libs;
 use Libs\Str;
 use Libs\Arr;
+use Libs\Config;
 
 class TemplateCompiler {
 
@@ -11,13 +12,38 @@ class TemplateCompiler {
 
     public function __construct ($path) {
         $this->startCompile($path);
-        print_r($this->_code);
     }
 
     private function startCompile ($path) {
-        $this->_code = explode("\n", file_get_contents($path));
+        $this->_code = explode("\n", file_get_contents(__ROOT__ . Config::get("dirs/view") . "/" . $path . ".temp.php"));
         $this->cleareCode();
         $this->compile();
+        $this->templateSave($path);
+        $this->checkIncludes();
+    }
+
+    private function checkIncludes () {
+
+        for ($i = 0; $i < count($this->_includes); $i++) {
+            $this->_includes[$i] = trim(Str::replace($this->_includes[$i], ["." => "/"]));
+            $path = __ROOT__ . Config::get("dirs/compiled_templates") . "/" . Str::replace($this->_includes[$i], ["/" => "."]) . ".ctemp.php";
+            if (!file_exists($path)) {
+                $this->_code = [];
+                $this->startCompile($this->_includes[$i]);
+            }
+            unset($this->_includes[$i]);
+        }
+
+    }
+
+    private function templateSave ($path) {
+        $path = __ROOT__ . Config::get("dirs/compiled_templates") . "/" . Str::replace($path, ["/" => "."]) . ".ctemp.php";
+        $file = fopen($path, 'c');
+        $codeToSave = "";
+        foreach ($this->_code as $code) {
+            $codeToSave .= $code . "\n";
+        }
+        file_put_contents($path, $codeToSave);
     }
 
     private function compile () {
@@ -151,7 +177,7 @@ class TemplateCompiler {
         }
 
         $params = Str::replace($params[0], ["/" => "."]);
-        $this->_code[$line] = "<?php require_once({$params} . \".ctemp.php\"); ?>";
+        $this->_code[$line] = "<?php require_once(\"{$params}\" . \".ctemp.php\"); ?>";
         array_push($this->_includes, $params);
     }
 
