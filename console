@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+
+<?php
+
+if (PHP_OS == 'WINNT') {
+  echo '$ ';
+  $command = stream_get_line(STDIN, 1024, PHP_EOL);
+} else {
+  $command = readline('$ ');
+}
+
+print_r($command);
+
+exit();
