@@ -37,7 +37,7 @@ class View {
         require_once $ctempPath;
 
         if (Config::get("debug")) {
-            echo "<!-- WARNING! Currently your app is set in debug mode so templates are compiled in every webiste visit! -->";
+            echo "<!-- WARNING! Currently your app is set in debug mode so templates are compiled in every website visit and all errors are displayed with details! -->";
         }
 
     }
