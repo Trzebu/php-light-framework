@@ -152,7 +152,7 @@ class TemplateCompiler {
     }
 
     private function foreach ($line, $params) {
-        $this->_code[$line] = "<?php foreach(" . implode(" ", $params) . "): ?>";
+        $this->_code[$line] = "<?php foreach" . implode(" ", $params) . " ?>";
     }
 
     private function endif ($line) {
@@ -164,11 +164,11 @@ class TemplateCompiler {
     }
 
     private function elseif ($line, $params) {
-        $this->_code[$line] = "<?php elseif(" . implode(" ", $params) . "): ?>";
+        $this->_code[$line] = "<?php elseif" . implode(" ", $params) . " ?>";
     }
 
     private function if ($line, $params) {
-        $this->_code[$line] = "<?php if(" . implode(" ", $params) . "): ?>";
+        $this->_code[$line] = "<?php if" . implode(" ", $params) . " ?>";
     }
 
     private function includes ($line, $params) {
