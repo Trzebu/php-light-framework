@@ -28,7 +28,7 @@ class TemplateCompiler {
 
         for ($i = 0; $i < count($this->_includes); $i++) {
             $include = trim(Str::replace($this->_includes[$i], ["." => "/"]));
-            unset($this->_includes[$i]);
+            array_shift($this->_includes);
             $this->_code = [];
             $this->startCompile($include);
         }
