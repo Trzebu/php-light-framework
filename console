@@ -1,14 +1,11 @@
 #!/usr/bin/env php
-
 <?php
 
-if (PHP_OS == 'WINNT') {
-  echo '$ ';
-  $command = stream_get_line(STDIN, 1024, PHP_EOL);
-} else {
-  $command = readline('$ ');
-}
+define("__ROOT__", __DIR__);
+require_once(__ROOT__ . '/config/config.php');
+require_once("libs/functions/auto_load.php");
+use Libs\Console;
 
-print_r($command);
+$console = new Console();
 
 exit();
