@@ -42,6 +42,7 @@ class TemplateCompiler {
             $codeToSave .= $code . "\n";
         }
         file_put_contents($path, $codeToSave);
+        fclose($file);
     }
 
     private function compile () {
