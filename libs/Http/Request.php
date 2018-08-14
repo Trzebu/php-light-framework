@@ -1,8 +1,25 @@
 <?php
 
 namespace Libs\Http;
+use Libs\Session;
 
 class Request {
+
+    public function old ($name = null) {
+        if ($name !== null) {
+            if (is_array($name)) {
+                Session::set("Request_old_inputs", $name);
+            }
+            if (Session::exists("Request_old_inputs")) {
+                if (isset(Session::get("Request_old_inputs")[$name])) {
+                    $data = Session::get("Request_old_inputs")[$name];
+                    unset($_SESSION["Request_old_inputs"][$name]);
+                    return $data;
+                }
+            }
+        }
+        return "";
+    }
 
     public function input ($name = null) {
         if ($name !== null) {
