@@ -15,25 +15,23 @@ class TemplateCompiler {
     }
 
     private function startCompile ($path) {
-        $this->_code = explode("\n", file_get_contents(__ROOT__ . Config::get("dirs/view") . "/" . $path . ".temp.php"));
-        $this->cleareCode();
-        $this->compile();
-        $this->templateSave($path);
-        $this->checkIncludes();
+        if($file = file_get_contents(__ROOT__ . Config::get("dirs/view") . "/" . $path . ".temp.php")) {
+            $this->_code = explode("\n", $file);
+            $this->cleareCode();
+            $this->compile();
+            $this->templateSave($path);
+            $this->checkIncludes();
+        }
     }
 
     private function checkIncludes () {
 
         for ($i = 0; $i < count($this->_includes); $i++) {
-            $this->_includes[$i] = trim(Str::replace($this->_includes[$i], ["." => "/"]));
-            $path = __ROOT__ . Config::get("dirs/compiled_templates") . "/" . Str::replace($this->_includes[$i], ["/" => "."]) . ".ctemp.php";
-            if (!file_exists($path)) {
-                $this->_code = [];
-                $this->startCompile($this->_includes[$i]);
-            }
+            $include = trim(Str::replace($this->_includes[$i], ["." => "/"]));
             unset($this->_includes[$i]);
+            $this->_code = [];
+            $this->startCompile($include);
         }
-
     }
 
     private function templateSave ($path) {
