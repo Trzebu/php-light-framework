@@ -16,13 +16,6 @@ class ValidationErrors {
 
     }
 
-    public function input ($input) {
-        if (!$this->hasError()) {
-            return "";
-        }
-        return $this->_errors["inputs"][$input];
-    }
-
     public function all () {
         if (!$this->hasError()) {
             return null;
@@ -88,11 +81,8 @@ class ValidationErrors {
         return false;
     }
 
-    public static function set ($errors, $postData) {
-        Session::flash("validation_errors", [
-            "errors" => $errors,
-            "inputs" => $postData
-        ]);
+    public static function set ($errors) {
+        Session::flash("validation_errors", ["errors" => $errors]);
     }
 
 }
