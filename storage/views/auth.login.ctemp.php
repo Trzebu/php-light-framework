@@ -5,7 +5,7 @@
 <form class="form-vertical" role="form" method="post" action="">
 <div class="form-group <?php echo $this->errors->has('login') ? 'has-error' : '' ?>">
 <label for="login" class="control-label" id="login">Your login:</label>
-<input type="text" name="login" class="form-control" id="login" value="">
+<input type="text" name="login" class="form-control" id="login" value="<?php echo Libs\Http\Request::old('login') ?>">
 <?php if($this->errors->has('login')): ?>
 <span class="help-block"><?php echo $this->errors->get('login')->first() ?></span>
 <?php endif; ?>

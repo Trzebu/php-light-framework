@@ -29,7 +29,6 @@
 </ul>
 <?php if(Auth()->check()): ?>
 Welcome <?php echo Auth()->data()->login ?>!<br>
-You are logged in.<br>
 You are <?php echo Auth()->permissions() ?>
 <?php endif; ?>
 <?php require_once("partials.bot" . ".ctemp.php"); ?>
