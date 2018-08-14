@@ -50,7 +50,7 @@ final class AuthController extends Controller {
                 "login" => Request::input("login"),
                 "password" => password_hash(Request::input("password"), PASSWORD_DEFAULT)
             ]);
-            Session::flash("register_success", "Your account has been created and you can now sign in.");
+            Session::flash("info", "Your account has been created and you can now sign in.");
         }
 
         $this->redirect("auth.register");

@@ -1,3 +1,5 @@
+@include partials/top
+
 <h1>Profile!</h1>
 
 @if ($this->data !== null):
@@ -8,3 +10,5 @@
 @else
     This user is not exists.
 @endif
+
+@include partials/bot
