@@ -176,7 +176,7 @@ class TemplateCompiler {
             die("Error in compilation. Wrong parametr for include.");
         }
 
-        $params = Str::replace($params[0], ["/" => "."]);
+        $params = trim(Str::replace($params[0], ["/" => "."]));
         $this->_code[$line] = "<?php require_once(\"{$params}\" . \".ctemp.php\"); ?>";
         array_push($this->_includes, $params);
     }
