@@ -2,14 +2,12 @@
 
 <h1>Login</h1>
 
-
-
 <div class="row">
     <div class="col-lg-6">
         <form class="form-vertical" role="form" method="post" action="">
             <div class="form-group {{ $this->errors->has('login') ? 'has-error' : '' }}">
                 <label for="login" class="control-label" id="login">Your login:</label>
-                <input type="text" name="login" class="form-control" id="login" value="">
+                <input type="text" name="login" class="form-control" id="login" value="{{ Libs\Http\Request::old('login') }}">
                 @if ($this->errors->has('login')):
                     <span class="help-block">{{ $this->errors->get('login')->first() }}</span>
                 @endif
