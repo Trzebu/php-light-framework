@@ -8,6 +8,7 @@ use Libs\Validation\ValidationErrors;
 use Libs\Session;
 use Libs\Http\Redirect;
 use Libs\Translate;
+use Libs\Http\Request;
 
 class Controller {
 
@@ -22,7 +23,8 @@ class Controller {
         $validation = new Validation($post, $filters);
 
         if ($validation->errors() !== null) {
-            ValidationErrors::set($validation->errors(), $post);
+            ValidationErrors::set($validation->errors());
+            Request::old($post);
         }
 
         return $validation->check();
