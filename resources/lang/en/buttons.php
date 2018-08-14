@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "change" => "Change"
+    "change" => "Change",
+    "choose" => "Choose"
 ];
