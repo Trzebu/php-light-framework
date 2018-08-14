@@ -38,7 +38,6 @@
 
 @if (Auth()->check()):
     Welcome {{ Auth()->data()->login }}!<br>
-    You are logged in.<br>
     You are {{ Auth()->permissions() }}
 @endif
 
