@@ -12,7 +12,7 @@ class make_migration implements CommandInterface {
         $this->_commands = $commands;
     }
 
-    public function execute () {
+    public function execute ($params) {
         $this->_commands->make_migration();
     }
 

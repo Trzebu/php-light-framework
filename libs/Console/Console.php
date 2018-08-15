@@ -20,11 +20,13 @@ class Console {
     }
 
     private function run () {
-        $this->_command = "Libs\Console\Commands\\$this->_command";
+        $params = explode(" ", $this->_command);
+        $this->_command = "Libs\Console\Commands\\$params[0]";
+        array_shift($params);
 
         if (file_exists(__ROOT__ . "/" . $this->_command . ".php")) {
             $this->_command = new $this->_command(new Commands());
-            $this->_command->execute();
+            $this->_command->execute($params);
         } else {
             con_log("Unknown command {$this->_command}.");
         }

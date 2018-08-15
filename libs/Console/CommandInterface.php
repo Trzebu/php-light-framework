@@ -4,6 +4,6 @@ namespace Libs\Console;
 
 interface CommandInterface {
 
-    public function execute();
+    public function execute($params);
 
 }

@@ -4,9 +4,9 @@ namespace Libs\Console;
 
 class Commands {
 
-    public function create_table () {
+    public function create_table ($params) {
 
-        echo "create_table";
+        print_r($params);
     }
 
     public function make_migration () {

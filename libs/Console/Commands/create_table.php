@@ -12,8 +12,8 @@ class create_table implements CommandInterface {
         $this->_commands = $commands;
     }
 
-    public function execute () {
-        $this->_commands->create_table();
+    public function execute ($params) {
+        $this->_commands->create_table($params);
     }
 
 }
