@@ -2,6 +2,6 @@
 
 function con_log ($log) {
 
-    echo "{$log}\n";
+    echo "--- {$log}\n";
 
 }
