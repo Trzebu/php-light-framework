@@ -6,15 +6,15 @@ use Libs\DataBase\TableCreator;
 /**
 * Run the migrations.
 *
-* Auto created at: {data}
+* Auto created at: 2018-08-15 12:47:15
 *
 * PHP Light Framework Migration File.
 *
 */
 
-class Create{upper_table_name}Table extends TableCreator {
+class CreateTestTable extends TableCreator {
 
-    protected $tableName = "{table_name}";
+    protected $tableName = "test";
 
     public function create () {
 
