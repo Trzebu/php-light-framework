@@ -1,10 +1,19 @@
+<?php require_once("partials.top" . ".ctemp.php"); ?>
 <h1>Registered users:</h1>
-<?php if($this->data !== null): ?>
-<ol>
-<?php foreach($this->data as $user): ?>
-<li><a href="<?php echo route('user.profile', ['userId' => $user->id]) ?>"><?php echo $user->login ?></a></li>
+<?php if($this->data !== null): ?>
+<table class="table">
+<tr>
+<th scope="col">Login</th>
+<th scope="col">Profile</th>
+</tr>
+<?php foreach($this->data as $user): ?>
+<tr>
+<td scope="row"><?php echo $user->login ?></td>
+<td><a href="<?php echo route('user.profile', ['userId' => $user->id]) ?>">View profile</a></td>
+</tr>
 <?php endforeach; ?>
-</ol>
+</table>
 <?php else: ?>
 <h3>Currently we haven't registered users.</h3>
 <?php endif; ?>
+<?php require_once("partials.bot" . ".ctemp.php"); ?>

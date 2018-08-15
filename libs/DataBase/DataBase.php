@@ -11,7 +11,7 @@ use Countable;
 class DataBase implements Countable {
 
     private static $_instance = null;
-    private $_pdo;
+    protected $_pdo;
     private $_count = 0;
     protected $_table = null;
     private $_where = "";

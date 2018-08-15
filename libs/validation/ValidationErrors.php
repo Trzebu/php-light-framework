@@ -16,13 +16,6 @@ class ValidationErrors {
 
     }
 
-    public function input ($input) {
-        if (!$this->hasError()) {
-            return "";
-        }
-        return $this->_errors["inputs"][$input];
-    }
-
     public function all () {
         if (!$this->hasError()) {
             return null;
@@ -38,7 +31,7 @@ class ValidationErrors {
     }
 
     public function first () {
-        if (!$this->hasError()) {
+        if (!$this->has()) {
             return null;
         }
         foreach ($this->_errors["errors"] as $error) {
@@ -59,8 +52,8 @@ class ValidationErrors {
         return $errors;
     }
 
-    public function getErrors ($input = null) {
-        if ($this->hasError()) {
+    public function get ($input = null) {
+        if ($this->has()) {
             if ($input !== null) {
                 foreach ($this->_errors["errors"] as $error) {
                     if ($error[0] == $input) {
@@ -74,7 +67,7 @@ class ValidationErrors {
         return false;
     }
 
-    public function hasError ($input = null) {
+    public function has ($input = null) {
         if ($this->_errors !== null) {
             if ($input === null) {
                 return true;
@@ -88,11 +81,8 @@ class ValidationErrors {
         return false;
     }
 
-    public static function set ($errors, $postData) {
-        Session::flash("validation_errors", [
-            "errors" => $errors,
-            "inputs" => $postData
-        ]);
+    public static function set ($errors) {
+        Session::flash("validation_errors", ["errors" => $errors]);
     }
 
 }

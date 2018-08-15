@@ -1,6 +1,6 @@
 @include partials/top
 
-<h1>Login</h1>
+<h1>Register</h1>
 
 <div class="row">
     <div class="col-lg-6">
@@ -12,22 +12,30 @@
                     <span class="help-block">{{ $this->errors->get('login')->first() }}</span>
                 @endif
             </div>
-            <div class="form-group  {{ $this->errors->has('password') ? 'has-error' : '' }}">
-                <label for="password" class="control-label" id="password">Your password:</label>
+            <div class="form-group {{ $this->errors->has('password') ? 'has-error' : '' }}">
+                <label for="password" class="control-label">Choose a password</label>
                 <input type="password" name="password" class="form-control" id="password" value="">
                 @if ($this->errors->has('password')):
                     <span class="help-block">{{ $this->errors->get('password')->first() }}</span>
                 @endif
             </div>
-            <div class="checkbox">
+            <div class="form-group {{ $this->errors->has('password_again') ? 'has-error' : '' }}">
+                <label for="password_again" class="control-label">Choose a password</label>
+                <input type="password" name="password_again" class="form-control" id="password_again" value="">
+                @if ($this->errors->has('password_again')):
+                    <span class="help-block">{{ $this->errors->get('password_again')->first() }}</span>
+                @endif
+            </div>
+            <div class="checkbox {{ $this->errors->has('rule') ? 'has-error' : '' }}">
                 <label>
-                    <input type="checkbox" name="remember"> Remember me
+                    <input type="checkbox" name="rule"> Accept rule
                 </label>
+                @if ($this->errors->has('rule')):
+                    <span class="help-block">{{ $this->errors->get('rule')->first() }}</span>
+                @endif
             </div>
             <input type="hidden" name="_token" value="{{ $this->token->generate('_token') }}">
-            <div class="form-group">
-                <button type="submit" class="btn btn-default">Login</button>
-            </div>   
+            <input type="submit" value="Register">
         </form>
     </div>
 </div>
