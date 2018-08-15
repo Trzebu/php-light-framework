@@ -5,6 +5,26 @@ use Libs\Str;
 
 class Commands {
 
+    public function delete_migrations_scheme () {
+        con_log("Searching files to delete...");
+        $path = __ROOT__ . "/database/migrations";
+        if (is_dir($path)) {
+            $files = scandir($path);
+                   
+            foreach ($files as $file) {
+                if ($file[0] != ".") {
+                    unlink($path . "/{$file}");
+                    con_log("Deleted scheme {$file}");
+                }
+            }
+
+            con_log("All schemes deleted!");
+
+        } else {
+            con_log("Data base migration dir no exists!");
+        }
+    }
+
     public function create_table ($params) {
         if (isset($params[0]) && strlen($params[0]) > 0) {
             $param = $params[0];
