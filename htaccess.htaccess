@@ -1,6 +1,6 @@
 Options -Indexes
 Options -MultiViews
-RewriteEngine Off
+RewriteEngine On
 
 RewriteBase /
 
