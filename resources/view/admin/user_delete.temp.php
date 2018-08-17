@@ -17,7 +17,7 @@
             <th scope="col">Delete</th>
         </tr>
 
-        @foreach ($this->users_list as $user):
+        @foreach ($this->users_list->results() as $user):
         
             <tr>
                 <td scope="row">{{ $user->id }}</td>
@@ -27,6 +27,9 @@
 
         @endforeach
     </table>
+
+    {{ $this->users_list->paginateRender() }}
+
 @else
 
 @endif
