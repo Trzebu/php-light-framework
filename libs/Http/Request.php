@@ -13,6 +13,7 @@ class Request {
                     return $vars[$var];
                 }
             }
+            return null;
         }
         return count(self::$_urlVars) > 0 ? self::$_urlVars : null;
     }
