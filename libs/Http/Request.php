@@ -6,7 +6,7 @@ use Libs\Session;
 class Request {
     private static $_urlVars = [];
 
-    public static function getVars ($var = null) {
+    public static function urlVar ($var = null) {
         if ($var != null) {
             foreach (self::$_urlVars as $vars) {
                 if (isset($vars[$var])) {
