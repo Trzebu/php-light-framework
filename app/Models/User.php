@@ -9,7 +9,7 @@ class User extends Model {
     protected $_table = "users";
 
     public function usersList () {
-        return $this->get(["id", "login"])->count() > 0 ? $this->results() : null;
+        return $this->get(["id", "login"])->count() > 0 ? $this : null;
     }
 
     public function data ($id = null) {
