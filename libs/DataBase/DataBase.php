@@ -106,7 +106,18 @@ class DataBase implements Countable {
         }
         $position = $limit * $page;
 
-        array_push($this->_atEnd, "LIMIT {$limit} OFFSET {$position}");
+        $this->rowsLimit($limit)->position($position);
+
+        return $this;
+    }
+
+    public function position ($position) {
+        array_push($this->_atEnd, "OFFSET {$position}");
+        return $this;
+    }
+
+    public function rowsLimit ($limit) {
+        array_push($this->_atEnd, "LIMIT {$limit}");
         return $this;
     }
 

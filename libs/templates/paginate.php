@@ -1,63 +1,53 @@
-
 <!-- PHP light framework - paginate -->
 
-<style>
+<?php
 
-    #plf_paginate_container {
-        display: inline-block;
-        padding-left: 0;
-        margin: 20px 0;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+$current_page = 0;
 
-    #plf_paginate_container > li {
-        display: inline;
-    }
+if (Libs\Http\Request::urlVar("page") !== null) {
+    $current_page = Libs\Http\Request::urlVar("page");
+}
 
-    #plf_paginate_container > li > span, #plf_paginate_container > li > a {
-        position: relative;
-        float: left;
-        padding: 6px 12px;
-        margin-left: -1px;
-        line-height: 1.42857143;
-        color: #337ab7;
-        text-decoration: none;
-        background-color: #fff;
-        border: 1px solid #ddd;
-    }
+$links = 7;
+$last = ceil($this->allRowCount / $this->pageLimit);
+$start = (($current_page - $links) > 0) ? $current_page - $links : 0;
+$end = (($current_page+ $links) < $last) ? $current_page + $links : $last;
 
-    .plf_active > a {
-        z-index: 3;
-        color: #fff!important;
-        cursor: default;
-        background-color: #337ab7!important;
-        border-color: #337ab7!important;
-    }
+?>
 
-</style>
+<link rel="stylesheet" href="<?= Route("/") ?>/public/framework/css/paginator.css">
 
 <ul id="plf_paginate_container" role="navigation">
-    <li>
-        <span>‹</span>
-    </li>
+
+    <?php if (($current_page - 1) < 0): ?>
+        <li class="plf_disable"><span>&laquo;</span></li>
+    <?php else: ?>
+        <li><a href="<?= Libs\Http\Request::url() ?>/?page=<?= $current_page - 1 ?>">&laquo;</a></li>
+    <?php endif; ?>
+    <?php if ($start > 0): ?>
+        <li><a href="<?= Libs\Http\Request::url() ?>/?page=0">1</a></li>
+        <li class="plf_disable"><span>...</span></li>
     <?php
-        $current_page = 0;
+        endif;
 
-        if (Libs\Http\Request::urlVar("page") !== null) {
-            $current_page = Libs\Http\Request::urlVar("page");
-        }
-
-        for ($i = 0; $i < round(($this->allRowCount / $this->pageLimit)); $i++) {
-            if ($current_page + 1 == $i + 1) {
-                echo "<li class='plf_active'><a href=" . Libs\Http\Request::url() . "?page={$i}>" . ($i + 1) . "</a></li>";
+        for ($i = $start; $i < $end; $i++) {
+            if ($current_page == $i) {
+                echo "<li class='plf_active'><span>" . ($i + 1) . "</span></li>";
             } else {
                 echo "<li><a href=" . Libs\Http\Request::url() . "/?page={$i}>" . ($i + 1) . "</a></li>";
             }
         }
 
+        if ($end < $last):
     ?>
-    <li>
-        <a href="http://localhost?page=2" rel="next">›</a>
-    </li>
+        <li class="plf_disable"><span>...</span></li>
+        <li><a href="<?= Libs\Http\Request::url() ?>/?page=<?= $last - 1 ?>"><?= $last ?></a></li>
+    <?php endif; ?>
+
+    <?php if (($current_page + 1) == $last): ?>
+        <li class="plf_disable"><span>&raquo;</span></li>
+    <?php else: ?>
+        <li><a href="<?= Libs\Http\Request::url() ?>/?page=<?= $current_page + 1 ?>">&raquo;</a></li>
+    <?php endif; ?>
+
 </ul>
