@@ -10,6 +10,8 @@ use Libs\DataBase\DataBase as DB;
 *
 * PHP Light Framework Migration File.
 *
+* Required to run demo.
+*
 */
 
 class CreatePermissionsTable extends TableCreator {

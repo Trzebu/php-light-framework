@@ -15,4 +15,8 @@ class Model extends DataBase {
         return TimeConverter::diffToHuman($time);
     }
 
+    public function paginateRender () {
+        require_once(__ROOT__ . "/libs/templates/paginate.php");
+    }
+
 }

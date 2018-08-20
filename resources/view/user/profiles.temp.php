@@ -11,7 +11,7 @@
             <th scope="col">Profile</th>
         </tr>
 
-        @foreach ($this->data as $user):
+        @foreach ($this->data->results() as $user):
 
             <tr>
                 <td scope="row">{{ $user->login }}</td>
@@ -21,6 +21,8 @@
         @endforeach
 
     </table>
+
+    {{ $this->data->paginateRender() }}
 
 @else
     <h3>Currently we haven't registered users.</h3>

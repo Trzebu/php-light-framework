@@ -12,7 +12,7 @@ final class ProfileController extends Controller {
         $user = new User();
         
         $this->view->data = $user->data($userId);
-        $this->view->registered_at = $user->diffToHuman($this->view->data->created_at);
+        $this->view->registered_at = $this->view->data !== null ? $user->diffToHuman($this->view->data->created_at) : null;
 
         $this->view->render("user.profile");
     }
