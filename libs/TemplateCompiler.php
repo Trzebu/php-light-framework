@@ -36,6 +36,9 @@ class TemplateCompiler {
 
     private function templateSave ($path) {
         $path = __ROOT__ . Config::get("dirs/compiled_templates") . "/" . Str::replace($path, ["/" => "."]) . ".ctemp.php";
+        if (!is_dir(__ROOT__ . "/storage/views")) {
+            mkdir(__ROOT__ . "/storage/views", 0700, true);
+        }
         $file = fopen($path, 'c');
         $codeToSave = "";
         foreach ($this->_code as $code) {
