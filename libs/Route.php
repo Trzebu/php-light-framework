@@ -45,7 +45,7 @@ class Route {
         if (count(self::$get) == 0 &&
             count(self::$post) == 0) {
             array_push(self::$get, ["/", [
-                "uses" => "Libs\Templates\Demo\Main@index"
+                "uses" => "Libs\Templates\Framework\Demo\Main@index"
             ]]);
         }
 
@@ -84,7 +84,12 @@ class Route {
             }
         }
 
-        return false;
+        return [
+            "route" => ["", [
+                "uses" => "Libs\Templates\Framework\Errors\Error_404\Error@index"
+            ]],
+            "params" => []
+        ];
 
     }
 
