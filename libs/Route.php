@@ -42,6 +42,13 @@ class Route {
             Throw new Error("Unknown request method.");
         }
 
+        if (count(self::$get) == 0 &&
+            count(self::$post) == 0) {
+            array_push(self::$get, ["/", [
+                "uses" => "Libs\Templates\Demo\Main@index"
+            ]]);
+        }
+
         $type = $type == "get" ? self::$get : self::$post;
 
         if ($path[strlen($path) - 1] == "/" && (strlen($path) - 1) !== 0) {
