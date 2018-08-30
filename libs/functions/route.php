@@ -3,6 +3,11 @@ use Libs\Route;
 use Libs\Config;
 
 function route ($routeName, $params = []) {
+
+    if ($routeName == "/" && count($params) == 0) {
+        return Config::get("host");
+    }
+
     if (Route::getRouteUrl($routeName)) {
         $path = Route::getRouteUrl($routeName);
 
