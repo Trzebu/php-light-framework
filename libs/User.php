@@ -54,7 +54,7 @@ class User {
             if ($i == 0) {
                 $db->where($key, "=", $value);
             } else {
-                $db->and($key, "=", $value);
+                $db->or($key, "=", $value);
             }
             $i++;
         }
