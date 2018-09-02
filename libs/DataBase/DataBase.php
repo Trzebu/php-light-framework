@@ -217,7 +217,9 @@ class DataBase implements Countable {
     public function get ($params = ["*"]) {
         $this->_getValues = $params;
         $this->queryBuilder("SELECT");
-        return $this;
+        $t = $this;
+        $this->reset();
+        return $t;
     }
 
     public function table ($table) {
