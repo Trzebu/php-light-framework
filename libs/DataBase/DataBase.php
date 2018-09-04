@@ -137,7 +137,7 @@ class DataBase implements Countable {
     }
 
     public function where ($argument, $operator, $value = null) {
-        $operators = ["=", "!=", "<", ">", "<=", ">=", "null"];
+        $operators = ["=", "!=", "<", ">", "<=", ">=", "null", "not_null"];
         try {
             if ($this->_table === null) {
                 Throw new Error("First you must set table!");
@@ -248,6 +248,8 @@ class DataBase implements Countable {
             return $argument . " NOT IN (?)";
         } else if ($operator == "null") {
             return $argument . " IS NULL";
+        } else if ($operator == "not_null") {
+            return $argument . " IS NOT NULL";
         } else {
             return $argument . $operator . "?";
         }
