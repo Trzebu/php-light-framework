@@ -115,6 +115,10 @@ class DataBase implements Countable {
         return $this;
     }
 
+    public function numRow () {
+        return $this->get(["COUNT(*) as row_num"])->first()->row_num;
+    }
+
     public function position ($position) {
         array_push($this->_atEnd, "OFFSET {$position}");
         return $this;
