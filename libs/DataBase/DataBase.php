@@ -98,8 +98,12 @@ class DataBase implements Countable {
     }
 
     public function paginate ($limit = 1) {
+        $where = $this->_where;
+        $values = $this->_values;
         $this->allRowCount = $this->get(["COUNT(*) as row_num"])->first()->row_num;
         $this->pageLimit = $limit;
+        $this->_where = $where;
+        $this->_values = $values;
         $page = 0;
         if (Request::urlVar("page") !== null) {
             $page = intval(Request::urlVar("page"));
