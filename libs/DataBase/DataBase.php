@@ -176,8 +176,9 @@ class DataBase implements Countable {
 
         $sql .= implode(",", $params);
         $sql .= " WHERE " . $this->_where;
-        echo $sql;
-        return $this->query($sql, $update_values);
+        $t = $this->query($sql, $update_values);
+        $this->reset();
+        return $t;
     }
 
     public function insert ($fields) {
@@ -235,13 +236,13 @@ class DataBase implements Countable {
         return $this;
     }
 
-    public function or ($argument, $operator, $value) {
+    public function or ($argument, $operator, $value = null) {
         $this->_where .= " OR ";
         $this->where($argument, $operator, $value);
         return $this;
     }
 
-    public function and ($argument, $operator, $value) {
+    public function and ($argument, $operator, $value = null) {
         $this->_where .= " AND ";
         $this->where($argument, $operator, $value);
         return $this;
@@ -263,6 +264,7 @@ class DataBase implements Countable {
         $this->_where = "";
         $this->_values = [];
         $this->_getValues = [];
+        $this->_atEnd = [];
     }
 
     public function count () {
