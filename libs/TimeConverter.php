@@ -13,10 +13,11 @@ class TimeConverter {
         return (int) $now - $time;
     }
 
-    public function dateTimeWithAlphaMonth ($date) {
+    public function dateTimeWithAlphaMonth ($date, $short_notation = false) {
         $splited_date = explode ("/", date("j/n/Y/H/i", strtotime($date)));
-        
-        return  "{$splited_date[0]} " . strtolower(Translate::get("time.full_months.{$splited_date[1]}")) . " {$splited_date[2]}, {$splited_date[3]}:{$splited_date[4]}";
+        $short_notation = !$short_notation ? 0 : 1; 
+
+        return  "{$splited_date[0]} " . strtolower(Translate::get("time.full_months.{$splited_date[1]}.{$short_notation}")) . " {$splited_date[2]}, {$splited_date[3]}:{$splited_date[4]}";
     }
 
     public function diffToHuman ($time) {
