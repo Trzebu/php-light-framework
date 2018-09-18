@@ -19,8 +19,8 @@ class Model extends DataBase {
         return TimeConverter::diffToHuman($time);
     }
 
-    public function dateTimeAlphaMonth ($date) {
-        return TimeConverter::dateTimeWithAlphaMonth($date);
+    public function dateTimeAlphaMonth ($date, $short_notation = false) {
+        return TimeConverter::dateTimeWithAlphaMonth($date, $short_notation);
     }
 
     public function paginateRender () {
