@@ -6,6 +6,13 @@ use Libs\Translate;
 
 class TimeConverter {
 
+    public function calcTimeDifference ($time) {
+        $time = is_string($time) ? strtotime($time) : $time;
+        $now = time();
+
+        return (int) $now - $time;
+    }
+
     public function dateTimeWithAlphaMonth ($date) {
         $splited_date = explode ("/", date("j/n/Y/H/i", strtotime($date)));
         
