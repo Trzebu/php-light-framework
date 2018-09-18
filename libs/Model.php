@@ -11,6 +11,10 @@ class Model extends DataBase {
         parent::__construct();
     }
 
+    public function calcTimeDiff ($time) {
+        return TimeConverter::calcTimeDifference($time);
+    }
+
     public function diffToHuman ($time) {
         return TimeConverter::diffToHuman($time);
     }
