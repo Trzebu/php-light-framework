@@ -18,4 +18,5 @@ return [
     "unique" => "The :attribute has already been taken.",
     "token" => "Token expired. Try again.",
     "accepted" => "The :attribute must be accepted.",
+    "url" => "The :attribute must be valid URL address.",
 ];
