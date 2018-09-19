@@ -35,6 +35,20 @@ class Request {
         return "";
     }
 
+    public function get ($name = null) {
+        if ($name !== null) {
+            return isset($_GET[$name]) ? $_GET[$name] : null;
+        }
+        return $_GET;
+    }
+
+    public function files ($name = null) {
+        if ($name !== null) {
+            return isset($_FILES[$name]) ? $_FILES[$name] : null;
+        }
+        return $_FILES;
+    }
+
     public function input ($name = null) {
         if ($name !== null) {
             return isset($_POST[$name]) ? $_POST[$name] : null;
