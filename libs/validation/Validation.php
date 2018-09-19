@@ -126,6 +126,13 @@ class Validation {
                             ]));
                         }
                     break;
+                    case "url":
+                        if (filter_var($post[$input], FILTER_VALIDATE_URL) === FALSE && !empty($post[$input])) {
+                            $this->addError($input, Str::replace(Translate::get("validation.url"), [
+                                ":attribute" => $attribute
+                            ]));
+                        }
+                    break;
                 }
             }
 
