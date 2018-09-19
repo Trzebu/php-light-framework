@@ -51,9 +51,10 @@ class Request {
         }
 
         if ($name !== null) {
-            return isset($_POST[$name]) ? $_POST[$name] : null;
+            return isset($data[$name]) ? $data[$name] : null;
         }
-        return $_POST;
+        
+        return $data;
     }
 
     public static function method ($method) {
