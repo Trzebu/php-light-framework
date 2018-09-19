@@ -38,22 +38,22 @@ class Request {
     public function input ($name = null) {
         $data = [];
 
-        if (count($_POST) > 0) {
+        if (!empty($_POST)) {
             $data = array_merge($data, $_POST);
         }
 
-        if (count($_FILES) > 0) {
+        if (!empty($_FILES)) {
             $data = array_merge($data, $_FILES);
         }
 
-        if (count($_GET) > 0) {
+        if (!empty($_GET)) {
             $data = array_merge($data, $_GET);
         }
 
         if ($name !== null) {
             return isset($data[$name]) ? $data[$name] : null;
         }
-        
+
         return $data;
     }
 
