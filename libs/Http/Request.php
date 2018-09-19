@@ -50,7 +50,6 @@ class Request {
             $data = array_merge($data, $_GET);
         }
 
-        dd($data); 
         if ($name !== null) {
             return isset($_POST[$name]) ? $_POST[$name] : null;
         }
