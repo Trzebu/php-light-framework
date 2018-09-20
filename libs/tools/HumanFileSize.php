@@ -14,7 +14,7 @@ class HumanFileSize {
             $i++;
         }
 
-        return round($size, $precision) . " " . trans("file_size_units.{$type}.{$i}");;
+        return round($size, 2) . " " . trans("file_size_units.{$type}.{$i}");;
     }
 
 }
