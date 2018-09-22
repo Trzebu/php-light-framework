@@ -39,8 +39,8 @@ final class AuthController extends Controller {
 
     public function getRegisterPost () {
         if ($this->validation(Request::input(), [
-            "login" => ["required|alpha_num|unique:users|min_string:4|max_string:20", "Login"],
-            "password" => "required|min_string:4",
+            "login" => ["required|alpha:num|unique:users|str>min:4>max:20", "Login"],
+            "password" => "required|str>min:4",
             "password_again" => ["same:password", "password again"],
             "rule" => ["accepted", "rules"],
             "_token" => "token"
