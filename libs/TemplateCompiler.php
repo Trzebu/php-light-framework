@@ -9,6 +9,7 @@ class TemplateCompiler {
 
     private $_code = [];
     private $_includes = [];
+    private $_line = 0;
 
     public function __construct ($path) {
         $this->startCompile($path);
@@ -50,40 +51,42 @@ class TemplateCompiler {
 
     private function compile () {
         for ($i = 0; $i < count($this->_code); $i++) {
+            $this->_line = $i;
 
             if (strpos($this->_code[$i], "@") !== false) {
                 $command = ltrim($this->_code[$i], "@");
                 $params = explode(" ", $command);
                 $command = trim($params[0]);
                 array_shift($params);
-                $line = $i;
 
                 switch ($command) {
                     case "include":
-                        $this->includes($line, $params);
+                        $this->includes($params);
                     break;
                     case "if":
-                        $this->if($line, $params);
+                        $this->if($params);
                     break;
                     case "elseif":
-                        $this->elseif($line, $params);
+                        $this->elseif($params);
                     break;
                     case "else":
-                        $this->else($line);
+                        $this->else();
                     break;
                     case "endif":
-                        $this->endif($line);
+                        $this->endif();
                     break;
                     case "foreach":
-                        $this->foreach($line, $params);
+                        $this->foreach($params);
                     break;
                     case "endforeach":
-                        $this->endforeach($line);
+                        $this->endforeach();
                     break;
                 }
 
             } else if ((strpos($this->_code[$i], "{{") !== false) && (strpos($this->_code[$i], "}}") !== false)) {
-                $this->variable($i);
+                $this->variable_echo();
+            } else if ((strpos($this->_code[$i], "{?") !== false) && (strpos($this->_code[$i], "?}") !== false)) {
+                $this->variable_declare();
             }
 
         }
@@ -112,74 +115,51 @@ class TemplateCompiler {
         return $str;
     }
 
-    //*********Vars*****************
+    //*********Vars echo*****************
 
-    private function variable ($line) {
-        $bracket = 0;
-        $row = $this->_code[$line];
-        $currentVarName = [];
-        $vars = [];
+    private function variable_echo () {
+        $this->_code[$this->_line] = preg_replace('/{{(.*?)}}/', '<?= ${1} ?>', $this->_code[$this->_line]);
+    }
 
-        for ($i = 0; $i < strlen($row); $i++) {
-            if ($row[$i] == "{") {
-                $bracket++;
-            } else if (($row[$i] == "}") && ($row[$i + 1] == "}")) {
-                $bracket = -1;
-            }
+    //*********Vars declaring*****************
 
-            if ($bracket == -1) {
-                array_push($vars, implode("", $currentVarName));
-                $currentVarName = [];
-                $bracket = 0;
-            }
-
-            if ($bracket == 2) {
-                if ($row[$i] != "{") {
-                    array_push($currentVarName, $row[$i]);
-                }
-            }
-
-        }
-
-        foreach ($vars as $var) {
-            $this->_code[$line] = Str::replace($this->_code[$line], ["{{" .$var . "}}" => "<?php echo " . trim($var) . " ?>"]);
-        }
-
+    private function variable_declare () {
+        $this->_code[$this->_line] = preg_replace('/\{\?(.*?)\?\}/', '<?php ${1} ?>', $this->_code[$this->_line]);
     }
 
     //*******All synatx*************
 
-    private function endforeach ($line) {
-        $this->_code[$line] = "<?php endforeach; ?>";
+    private function endforeach () {
+        $this->_code[$this->_line] = "<?php endforeach; ?>";
     }
 
-    private function foreach ($line, $params) {
-        $this->_code[$line] = "<?php foreach" . implode(" ", $params) . " ?>";
+    private function foreach ($params) {
+        $this->_code[$this->_line] = "<?php foreach" . implode(" ", $params) . " ?>";
     }
 
-    private function endif ($line) {
-        $this->_code[$line] = "<?php endif; ?>";
+    private function endif () {
+        $this->_code[$this->_line] = "<?php endif; ?>";
     }
 
-    private function else ($line) {
-        $this->_code[$line] = "<?php else: ?>";
+    private function else () {
+        $this->_code[$this->_line] = "<?php else: ?>";
     }
 
-    private function elseif ($line, $params) {
-        $this->_code[$line] = "<?php elseif" . implode(" ", $params) . " ?>";
+    private function elseif ($params) {
+        $this->_code[$this->_line] = "<?php elseif" . implode(" ", $params) . " ?>";
     }
 
-    private function if ($line, $params) {
-        $this->_code[$line] = "<?php if" . implode(" ", $params) . " ?>";
+    private function if ($params) {
+        $this->_code[$this->_line] = "<?php if" . implode(" ", $params) . " ?>";
     }
 
-    private function includes ($line, $params) {
-        if (count($params) > 1) {
+    private function includes ($params) {
+        if (count($this->_line) > 1) {
             die("Error in compilation. Wrong parametr for include.");
         }
 
         $params = trim(Str::replace($params[0], ["/" => "."]));
-        $this->_code[$line] = "<?php include(\"{$params}\" . \".ctemp.php\"); ?>";
+        $this->_code[$this->_line] = "<?php include(\"{$params}\" . \".ctemp.php\"); ?>";
         array_push($this->_includes, $params);
     }
 
