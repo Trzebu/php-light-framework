@@ -81,6 +81,12 @@ class TemplateCompiler {
                     case "endforeach":
                         $this->endforeach();
                     break;
+                    case "for":
+                        $this->for($params);
+                    break;
+                    case "endfor":
+                        $this->endfor();
+                    break;
                 }
 
             } else if ((strpos($this->_code[$i], "{{") !== false) && (strpos($this->_code[$i], "}}") !== false)) {
@@ -128,6 +134,14 @@ class TemplateCompiler {
     }
 
     //*******All synatx*************
+
+    private function endfor () {
+        $this->_code[$this->_line] = "<?php endfor; ?>";
+    }
+
+    private function for ($params) {
+        $this->_code[$this->_line] = "<?php for" . implode(" ", $params) . " ?>";
+    }
 
     private function endforeach () {
         $this->_code[$this->_line] = "<?php endforeach; ?>";
