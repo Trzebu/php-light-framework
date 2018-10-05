@@ -24,7 +24,7 @@ class View {
             if (!file_exists(__ROOT__ . Config::get("dirs/view") . "/" . $path . ".temp.php")) {
                 Throw new Exception("Template {$path} not found.");
             } else if (!file_exists($ctempPath) && !Config::get("debug")) {
-                Throw new Exception("Template {$path} is not compiled!");
+                $compile = new TemplateCompiler($path);
             }
         } catch (Exception $e) {
             die($e->getMessage());
